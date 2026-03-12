@@ -1,0 +1,51 @@
+# Token Manager 配置示例
+
+# 主模型配置
+primary_model:
+  name: "qwen3.5-plus"
+  provider: "bailian"
+  api_key: "sk-your-api-key-here"
+  monthly_limit: 1000000  # 每月 Token 限额
+  current_usage: 0  # 当前使用量（自动更新）
+
+# 备份模型列表（按优先级排序）
+backup_models:
+  - name: "qwen3.5-turbo"
+    provider: "bailian"
+    api_key: "sk-backup-key-1"
+    priority: 1  # 优先级，数字越小优先级越高
+    enabled: true
+  
+  - name: "deepseek-chat"
+    provider: "deepseek"
+    api_key: "sk-backup-key-2"
+    priority: 2
+    enabled: true
+  
+  - name: "glm-4"
+    provider: "zhipu"
+    api_key: "sk-backup-key-3"
+    priority: 3
+    enabled: true
+
+# 切换阈值（达到此比例时自动切换）
+switch_threshold: 0.8  # 80%
+
+# 告警阈值（达到此比例时发送告警）
+alert_threshold: 0.7  # 70%
+
+# 是否启用自动切换
+auto_switch: true
+
+# 告警配置
+alerts:
+  enabled: true
+  channels:
+    - type: "log"  # 日志告警
+    - type: "file"  # 文件告警
+      path: "~/.openclaw/skills/token-manager/alerts.log"
+
+# 统计配置
+stats:
+  enabled: true
+  retention_days: 90  # 保留多少天的使用记录
